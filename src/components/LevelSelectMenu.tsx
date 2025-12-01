@@ -24,13 +24,13 @@ export const LevelSelectMenu = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="absolute inset-0 flex items-center justify-center bg-game-bg/95 backdrop-blur-sm z-50"
+      className="absolute inset-0 flex items-center justify-center bg-game-bg/95 backdrop-blur-sm z-50 overflow-y-auto"
     >
-      <div className="max-w-4xl w-full px-8">
+      <div className="max-w-4xl w-full px-4 sm:px-8 py-8">
         <motion.h1
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-5xl md:text-6xl font-bold text-center mb-12 font-mono"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8 sm:mb-12 font-mono"
           style={{
             textShadow: '0 0 20px hsl(var(--neon-cyan))',
           }}
@@ -38,7 +38,7 @@ export const LevelSelectMenu = ({
           SELECT_LEVEL.EXE
         </motion.h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {levels.map((level, index) => {
             const unlocked = isLevelUnlocked(level.id);
             const completed = completedLevels.includes(level.id);
@@ -53,35 +53,35 @@ export const LevelSelectMenu = ({
                 onClick={() => unlocked && onSelectLevel(level.id)}
                 disabled={!unlocked}
                 className={`
-                  relative p-6 rounded-lg border-2 text-left transition-all
+                  relative p-4 sm:p-6 rounded-lg border-2 text-left transition-all
                   ${unlocked 
                     ? `bg-card/80 backdrop-blur-sm hover:scale-105 cursor-pointer border-${level.color === 'cyan' ? 'neon-cyan' : level.color === 'purple' ? 'neon-purple' : 'neon-magenta'}` 
                     : 'bg-muted/20 border-muted cursor-not-allowed opacity-50'}
-                  ${isCurrent ? 'ring-4 ring-primary' : ''}
+                  ${isCurrent ? 'ring-2 sm:ring-4 ring-primary' : ''}
                 `}
                 style={unlocked ? {
                   boxShadow: `0 0 20px hsl(var(--neon-${level.color}) / 0.3)`
                 } : {}}
               >
                 {/* Status Badge */}
-                <div className="absolute top-4 right-4">
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
                   {completed ? (
-                    <CheckCircle2 className="w-6 h-6 text-green-400" />
+                    <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
                   ) : !unlocked ? (
-                    <Lock className="w-6 h-6 text-muted-foreground" />
+                    <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground" />
                   ) : null}
                 </div>
 
                 {/* Level Number */}
-                <div className="text-sm text-muted-foreground mb-2 font-mono">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-2 font-mono">
                   LEVEL_{level.id.toString().padStart(2, '0')}
                 </div>
 
                 {/* Company & Role */}
-                <h3 className="text-xl font-bold mb-2 font-mono">
+                <h3 className="text-lg sm:text-xl font-bold mb-2 font-mono">
                   {level.company}
                 </h3>
-                <p className="text-sm text-primary mb-2">{level.role}</p>
+                <p className="text-xs sm:text-sm text-primary mb-2">{level.role}</p>
                 <p className="text-xs text-muted-foreground mb-3">{level.year}</p>
 
                 {/* Challenge */}
