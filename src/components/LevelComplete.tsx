@@ -1,15 +1,16 @@
 import { motion } from "framer-motion";
-import { Trophy, ChevronRight, Award, Star } from "lucide-react";
+import { Trophy, ChevronRight, Award, Star, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Level } from "./GameCanvas";
 
 interface LevelCompleteProps {
   level: Level;
   onNext: () => void;
+  onBackToMenu?: () => void;
   isLastLevel: boolean;
 }
 
-export const LevelComplete = ({ level, onNext, isLastLevel }: LevelCompleteProps) => {
+export const LevelComplete = ({ level, onNext, onBackToMenu, isLastLevel }: LevelCompleteProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -83,12 +84,24 @@ export const LevelComplete = ({ level, onNext, isLastLevel }: LevelCompleteProps
           </div>
         </motion.div>
 
-        {/* Continue button */}
+        {/* Continue buttons */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, delay: 1 }}
+          className="flex gap-4 justify-center"
         >
+          {onBackToMenu && (
+            <Button
+              onClick={onBackToMenu}
+              size="lg"
+              variant="outline"
+              className="px-8 py-6 text-lg font-bold"
+            >
+              <Menu className="mr-2 w-5 h-5" />
+              MENU
+            </Button>
+          )}
           <Button
             onClick={onNext}
             size="lg"

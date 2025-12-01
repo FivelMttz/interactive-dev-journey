@@ -4,6 +4,7 @@ import { CareerLevel } from "./CareerLevel";
 import { GameHUD } from "./GameHUD";
 import { StartScreen } from "./StartScreen";
 import { LevelComplete } from "./LevelComplete";
+import { LevelSelectMenu } from "./LevelSelectMenu";
 
 export interface Level {
   id: number;
@@ -24,7 +25,7 @@ const levels: Level[] = [
     year: "2017-2018",
     description: "Home automation & IoT devices",
     skills: ["Android", "Java", "Bluetooth LE", "IoT"],
-    challenge: "Connect smart lights using Bluetooth LE",
+    challenge: "Connect 4 smart devices using Bluetooth LE protocol",
     color: "cyan"
   },
   {
@@ -34,7 +35,7 @@ const levels: Level[] = [
     year: "2018-2020",
     description: "Agricultural IoT & monitoring systems",
     skills: ["Python", "Redis", "LoRa", "Sigfox"],
-    challenge: "Automate irrigation system monitoring",
+    challenge: "Monitor and automate irrigation for 4 sensor nodes",
     color: "purple"
   },
   {
@@ -44,7 +45,7 @@ const levels: Level[] = [
     year: "2020-2021",
     description: "Web platforms & agile methodologies",
     skills: ["React", "Java Spring", "PHP", "Agile"],
-    challenge: "Build art gallery management platform",
+    challenge: "Build art gallery platform with 4 core features",
     color: "magenta"
   },
   {
@@ -54,7 +55,7 @@ const levels: Level[] = [
     year: "2021-2022",
     description: "Medical IoT for 150k+ users worldwide",
     skills: ["Kotlin", "Medical IoT", "Wear OS", "BLE"],
-    challenge: "Optimize Bluetooth connection for CGM devices",
+    challenge: "Optimize BLE connection for CGM device accuracy",
     color: "cyan"
   },
   {
@@ -64,24 +65,35 @@ const levels: Level[] = [
     year: "2023-Present",
     description: "AI automation & team leadership",
     skills: ["AI/ML", "Leadership", "Google Cloud", "Spring"],
-    challenge: "Lead AI projects and coordinate teams",
+    challenge: "Lead AI automation projects across multiple teams",
     color: "purple"
   }
 ];
 
 export const GameCanvas = () => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [showLevelSelect, setShowLevelSelect] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [showLevelComplete, setShowLevelComplete] = useState(false);
   const [collectedSkills, setCollectedSkills] = useState<string[]>([]);
+  const [completedLevels, setCompletedLevels] = useState<number[]>([]);
   const canvasRef = useRef<HTMLDivElement>(null);
 
   const handleStartGame = () => {
     setGameStarted(true);
+    setShowLevelSelect(true);
+  };
+
+  const handleSelectLevel = (levelId: number) => {
+    setCurrentLevel(levelId - 1);
+    setShowLevelSelect(false);
   };
 
   const handleLevelComplete = (skills: string[]) => {
     setCollectedSkills([...collectedSkills, ...skills]);
+    if (!completedLevels.includes(levels[currentLevel].id)) {
+      setCompletedLevels([...completedLevels, levels[currentLevel].id]);
+    }
     setShowLevelComplete(true);
   };
 
@@ -89,7 +101,14 @@ export const GameCanvas = () => {
     setShowLevelComplete(false);
     if (currentLevel < levels.length - 1) {
       setCurrentLevel(currentLevel + 1);
+    } else {
+      setShowLevelSelect(true);
     }
+  };
+
+  const handleBackToMenu = () => {
+    setShowLevelComplete(false);
+    setShowLevelSelect(true);
   };
 
   return (
@@ -114,11 +133,20 @@ export const GameCanvas = () => {
       <AnimatePresence mode="wait">
         {!gameStarted ? (
           <StartScreen key="start" onStart={handleStartGame} />
+        ) : showLevelSelect ? (
+          <LevelSelectMenu
+            key="select"
+            levels={levels}
+            onSelectLevel={handleSelectLevel}
+            completedLevels={completedLevels}
+            currentLevel={currentLevel + 1}
+          />
         ) : showLevelComplete ? (
           <LevelComplete 
             key="complete"
             level={levels[currentLevel]}
             onNext={handleNextLevel}
+            onBackToMenu={handleBackToMenu}
             isLastLevel={currentLevel === levels.length - 1}
           />
         ) : (
