@@ -12,22 +12,22 @@ export const StartScreen = ({ onStart }: StartScreenProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="absolute inset-0 flex items-center justify-center"
+      className="absolute inset-0 flex items-center justify-center p-4 overflow-y-auto"
     >
-      <div className="text-center space-y-8 px-4 max-w-2xl">
+      <div className="text-center space-y-4 sm:space-y-8 px-4 max-w-2xl my-auto">
         <motion.div
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
         >
-          <Gamepad2 className="w-24 h-24 mx-auto text-primary animate-float" />
+          <Gamepad2 className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto text-primary animate-float" />
         </motion.div>
 
         <motion.h1
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-          className="text-6xl font-bold tracking-wider neon-text text-primary"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider neon-text text-primary"
           style={{ textShadow: '0 0 20px hsl(var(--neon-cyan)), 0 0 40px hsl(var(--neon-cyan))' }}
         >
           DEVELOPER.EXE
@@ -37,15 +37,15 @@ export const StartScreen = ({ onStart }: StartScreenProps) => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="space-y-4"
+          className="space-y-3 sm:space-y-4"
         >
-          <h2 className="text-2xl font-bold text-foreground">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">
             Adrian Fível Rangel
           </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-base sm:text-lg">
             Software Developer / IoT Engineer
           </p>
-          <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Code2 className="w-4 h-4 text-neon-cyan" />
               <span>6+ Years Experience</span>
@@ -63,7 +63,7 @@ export const StartScreen = ({ onStart }: StartScreenProps) => {
           transition={{ delay: 0.8 }}
           className="space-y-4"
         >
-          <p className="text-muted-foreground max-w-md mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto">
             Experience my career journey as an interactive 2D adventure. 
             Complete levels, collect skills, and unlock achievements from junior developer to technical lead.
           </p>
@@ -77,7 +77,7 @@ export const StartScreen = ({ onStart }: StartScreenProps) => {
           <Button
             onClick={onStart}
             size="lg"
-            className="px-12 py-6 text-xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground relative overflow-hidden group"
+            className="px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-bold bg-primary hover:bg-primary/90 text-primary-foreground relative overflow-hidden group w-full sm:w-auto"
             style={{ 
               boxShadow: '0 0 30px hsl(var(--neon-cyan) / 0.5)',
               border: '2px solid hsl(var(--neon-cyan))'
@@ -98,8 +98,9 @@ export const StartScreen = ({ onStart }: StartScreenProps) => {
           transition={{ delay: 1.2 }}
           className="text-xs text-muted-foreground space-y-1"
         >
-          <p>Use ARROW KEYS or WASD to move</p>
-          <p>Press SPACE to interact</p>
+          <p className="hidden sm:block">Use ARROW KEYS or WASD to move</p>
+          <p className="hidden sm:block">Press SPACE to interact</p>
+          <p className="sm:hidden">Click buttons to play</p>
         </motion.div>
       </div>
     </motion.div>

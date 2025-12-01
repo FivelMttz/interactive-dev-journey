@@ -162,6 +162,7 @@ export const GameCanvas = () => {
               totalSkills={collectedSkills.length}
               currentLevelNumber={currentLevel + 1}
               totalLevels={levels.length}
+              onMenuClick={() => setShowLevelSelect(true)}
             />
             <CareerLevel 
               level={levels[currentLevel]}
